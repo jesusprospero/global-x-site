@@ -1,43 +1,77 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GLOBAL X - IA Mariana</title>
+  <title>Sistema GLOBAL X</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom right, #000611, #0f2b3e);
       color: white;
+      padding: 2rem;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .card {
+      background: #111c;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #000;
+      max-width: 480px;
+      width: 100%;
       text-align: center;
-      padding: 40px;
     }
-    .container {
-      background: rgba(0,0,0,0.5);
-      padding: 30px;
-      border-radius: 15px;
-      max-width: 600px;
-      margin: auto;
+    .status-box {
+      background: #1a3;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-radius: 12px;
+      font-weight: bold;
     }
-    h1 {
-      font-size: 2em;
-      margin-bottom: 20px;
+    textarea {
+      width: 100%;
+      height: 100px;
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      font-family: monospace;
+      resize: none;
     }
-    .status {
-      font-size: 1.2em;
-      background: #10b981;
-      padding: 10px;
+    button {
+      margin-top: 1rem;
+      padding: 1rem 2rem;
+      background: #0af;
+      color: white;
+      border: none;
       border-radius: 10px;
-      margin-top: 20px;
-      display: inline-block;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #08c;
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="card">
     <h1>Sistema GLOBAL X</h1>
-    <p>IA Mariana está online, monitorando e coordenando as integrações do sistema.</p>
-    <div class="status">🟢 Status: Ativa e em operação</div>
+    <p>IA Mariana está online, coordenando as integrações do sistema.</p>
+    <div id="status" class="status-box">Status: Ativa e em operação</div>
+    <textarea id="resposta" placeholder="Resposta da IA..."></textarea>
+    <button onclick="executarComando()">Executar Comando</button>
   </div>
+
+  <script>
+    async function executarComando() {
+      const resposta = await fetch("https://backend-globalx.vercel.app/api/mariana")
+        .then(r => r.text())
+        .catch(() => "Falha na conexão com a IA.");
+      document.getElementById("resposta").value = resposta;
+    }
+  </script>
 </body>
 </html>
